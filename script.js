@@ -9,7 +9,7 @@ let money = 55000,
 
 let lowercase = (addExpenses.toLocaleLowerCase()),
   splitString = (lowercase.split(', ')),
-  budgetDay = (money / 30);
+  budgetDay = Math.floor(money / 30);
 
 console.log(typeof money);
 console.log(typeof income);
