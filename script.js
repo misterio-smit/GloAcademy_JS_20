@@ -18,6 +18,8 @@ let appData = {
   expenses: {},
   addExpenses: [],
   deposit: false,
+  percentDeposit: 0,
+  moneyDeposit: 0,
   mission: 45000,
   period: 6,
   budget: money,
@@ -28,13 +30,31 @@ let appData = {
 
 
   asking: function () {
+
+    if (confirm('Есть ли у вас дополнительный заработок?')) {
+      let itemIncome = prompt('Какой у вас дополнительный заработок?', 'Таксую');
+      while (isNumber(itemIncome)) {
+        itemIncome = prompt('Какой у вас дополнительный заработок?', 'Таксую');
+      }
+      let cashIncome = +prompt('Сколько в месяц вы на этом зарабатываете?', '10000');
+      while (!isNumber(cashIncome)) {
+        cashIncome = +prompt('Сколько в месяц вы на этом зарабатываете?', '10000');
+      }
+      appData.income[itemIncome] = cashIncome;
+    }
+
+
     let addExpenses = prompt('Перечислите возможные расходы через запятую');
-    appData.addExpenses = addExpenses.toLowerCase().split(', ');
+    appData.addExpenses = addExpenses.toLowerCase().split(' ')
+      .map(j => j.charAt(0).toUpperCase() + j.substr(1).toLowerCase()).join(', ');
     appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
     for (let i = 0; i < 2; i++) {
 
       let name = prompt('Введите обязательную статью расходов?');
+      while (isNumber(name)) {
+        name = prompt('Введите обязательную статью расходов?');
+      }
       let money = +prompt('Во сколько это обойдется?');
 
       while (!isNumber(money)) {
@@ -80,6 +100,26 @@ let appData = {
       return ('Что то пошло не так');
     }
   },
+
+  getInfoDeposit: function () {
+    if (appData.deposit) {
+      do {
+        appData.percentDeposit = prompt('Какой годовой процент?', '10');
+      }
+      while (!isNumber(appData.percentDeposit));
+      do {
+        appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+      }
+      while (!isNumber(appData.moneyDeposit));
+
+    }
+  },
+
+  calcSaveMoney: function () {
+    return appData.budgetMonth * appData.period;
+  }
+
+
 };
 
 appData.asking();
@@ -98,3 +138,4 @@ console.log(appData.expensesMonth);
 for (let key in appData) {
   console.log('"Наша программа включает в себя данные: " ' + key + ' ' + appData[key]);
 }
+console.log(appData.addExpenses);
