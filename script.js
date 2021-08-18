@@ -7,7 +7,8 @@ let start = function () {
   do {
     money = +prompt('Ваш месячный доход?');
   }
-  while (!isNumber(money));
+  while (!isNumber(money) || money === 0);
+
 };
 
 start();
@@ -33,11 +34,11 @@ let appData = {
 
     if (confirm('Есть ли у вас дополнительный заработок?')) {
       let itemIncome = prompt('Какой у вас дополнительный заработок?', 'Таксую');
-      while (isNumber(itemIncome)) {
+      while (isNumber(itemIncome) || itemIncome === "") {
         itemIncome = prompt('Какой у вас дополнительный заработок?', 'Таксую');
       }
       let cashIncome = +prompt('Сколько в месяц вы на этом зарабатываете?', '10000');
-      while (!isNumber(cashIncome)) {
+      while (!isNumber(cashIncome) || cashIncome === 0) {
         cashIncome = +prompt('Сколько в месяц вы на этом зарабатываете?', '10000');
       }
       appData.income[itemIncome] = cashIncome;
@@ -52,12 +53,12 @@ let appData = {
     for (let i = 0; i < 2; i++) {
 
       let name = prompt('Введите обязательную статью расходов?');
-      while (isNumber(name)) {
+      while (isNumber(name) || name === "") {
         name = prompt('Введите обязательную статью расходов?');
       }
       let money = +prompt('Во сколько это обойдется?');
 
-      while (!isNumber(money)) {
+      while (!isNumber(money) || money === 0) {
         money = +prompt('Во сколько это обойдется?');
       }
       appData.expenses[name] = money;
@@ -106,11 +107,11 @@ let appData = {
       do {
         appData.percentDeposit = +prompt('Какой годовой процент?', '10');
       }
-      while (!isNumber(appData.percentDeposit));
+      while (!isNumber(appData.percentDeposit) || appData.percentDeposit === 0);
       do {
         appData.moneyDeposit = +prompt('Какая сумма заложена?', 10000);
       }
-      while (!isNumber(appData.moneyDeposit));
+      while (!isNumber(appData.moneyDeposit) || appData.moneyDeposit === 0);
 
     }
   },
